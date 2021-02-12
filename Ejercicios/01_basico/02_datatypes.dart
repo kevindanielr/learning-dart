@@ -60,5 +60,24 @@ main() {
 
   // ============================ Sets
 
-  // ============================  Mapas
+  Set<String> villanos2 = {'Superman', 'Batman', 'Robbin'};
+  villanos2.add('Flash Reverso');
+
+  villanos2.add('Batman');
+
+  print(villanos2.first);
+
+  // ============================  Mapas ( Diccionario: Llave - Valor )
+  Map<dynamic, String> ironman = {
+    'nombre': 'Tony Stark',
+    'poder': 'Inteligencia y el dinero',
+    10: 'Nivel de energía'
+  };
+
+  print(ironman);
+  print(ironman['nombre']);
+  print(ironman[10]);
+
+  Map<String, dynamic> capitan = new Map();
+  capitan.addAll({'nombre': 'Steve', 'poder': 'Soportar sueron sin morir'});
 }
