@@ -3,9 +3,9 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:app_peliculas/src/models/pelicula_model.dart';
-
 import '../models/pelicula_model.dart';
+import 'package:app_peliculas/src/models/pelicula_model.dart';
+import 'package:app_peliculas/src/models/actores_model.dart';
 
 class PeliculasProvider {
   // Parametros para el body request de la API de peliculas
@@ -82,5 +82,32 @@ class PeliculasProvider {
 
     _cargando = false;
     return resp;
+  }
+
+  // Metodo que realiza peticion que obtiene el casting
+  // Se crea un Future, por que es una cantidad finita de actores
+  Future<List<Actor>> getCast(String peliculaId) async {
+    final url = Uri.https(_url, '3/movie/$peliculaId/credits', {
+      'api_key': _apiKey,
+      'language': _language,
+    });
+
+    final resp = await http.get(url);
+    final decodedData = json.decode(resp.body);
+
+    final cast = new Cast.fromJsonList(decodedData['cast']);
+    return cast.actores;
+  }
+
+  // Metodo que realiza peticion para busqueda de peliculas
+  Future<List<Pelicula>> buscarPelicula(String query) async {
+    // Generando la url
+    final url = Uri.https(_url, '/3/search/movie', {
+      'api_key': _apiKey,
+      'language': _language,
+      'query': query,
+    });
+
+    return await _procesarRespuesta(url);
   }
 }

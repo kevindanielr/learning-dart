@@ -16,6 +16,9 @@ class Peliculas {
 }
 
 class Pelicula {
+  // Para animation hero
+  String uniqueId;
+
   bool adult;
   String backdropPath;
   List<int> genreIds;
