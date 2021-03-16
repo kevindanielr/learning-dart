@@ -15,8 +15,13 @@ class PeliculaDetalle extends StatelessWidget {
         slivers: [
           _crearAppbar(pelicula),
           SliverList(
-            delegate: SliverChildListDelegate(
-                [SizedBox(height: 10.0), _postertitulo(pelicula)]),
+            delegate: SliverChildListDelegate([
+              SizedBox(height: 10.0),
+              _postertitulo(context, pelicula),
+              _descripcion(pelicula),
+              _descripcion(pelicula),
+              _descripcion(pelicula),
+            ]),
           ),
         ],
       ),
@@ -46,7 +51,7 @@ class PeliculaDetalle extends StatelessWidget {
     );
   }
 
-  _postertitulo(Pelicula pelicula) {
+  _postertitulo(BuildContext context, Pelicula pelicula) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
@@ -58,12 +63,43 @@ class PeliculaDetalle extends StatelessWidget {
               height: 150.0,
             ),
           ),
+          SizedBox(width: 20.0),
           Flexible(
             child: Column(
-              children: [Text(pelicula.title), Text(pelicula.originalTitle)],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  pelicula.title,
+                  style: Theme.of(context).textTheme.title,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  pelicula.originalTitle,
+                  style: Theme.of(context).textTheme.subhead,
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.star_border),
+                    Text(
+                      pelicula.voteAverage.toString(),
+                      style: Theme.of(context).textTheme.subhead,
+                    )
+                  ],
+                )
+              ],
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _descripcion(Pelicula pelicula) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+      child: Text(
+        pelicula.overview,
+        textAlign: TextAlign.justify,
       ),
     );
   }
